@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Spell Check
  * A puzzle written by Zach Blick
@@ -18,7 +20,76 @@ public class SpellCheck {
      * @return String[] of all mispelled words in the order they appear in text. No duplicates.
      */
     public String[] checkWords(String[] text, String[] dictionary) {
+        // Arraylist to keep track of all words not present in dictionary
+        ArrayList<String> misspelledWords = new ArrayList<String>();
+        String currentWord = "";
+        System.out.println(dictionary.length);
+        for(int i = 0; i < dictionary.length; i++){
+            System.out.println(dictionary[i]);
+        }
+        int firstChar = 0;
+        int low = 0;
+        int high = text.length - 1;
+        int mid = 0;
+        // Go through each word in the text
+        for(int i = 0; i < text.length; i++){
+            currentWord = text[i];
+            // Perform binary search on current word
+            if(!binarySearch(dictionary, text, currentWord)){
+                misspelledWords.add(currentWord);
+            }
+        }
+        // Removes duplicates
+        String word = "";
+        for(int i = 0; i < misspelledWords.size() - 1; i++){
+            word = misspelledWords.get(i);
+            for(int j = i + 1; j < misspelledWords.size(); j++){
+                if(word.equals(misspelledWords.get(j))){
+                    misspelledWords.remove(j);
+                    j--;
+                }
+            }
+        }
+        // Convert ArrayList to array
+        String[] words = new String[misspelledWords.size()];
+        for(int i = 0; i < words.length; i++){
+            words[i] = misspelledWords.get(i);
+            System.out.println(words[i]);
+        }
+        return words;
+    }
+    public boolean binarySearch(String[] dictionary, String[] text, String currentWord){
+        // Calculate midpoint
+        int low = 0;
+        int high = dictionary.length - 1;
+        int currentLetter = 0;
+        System.out.println(currentWord);
+        while(low <= high){
+            System.out.println("low: " + low);
+            System.out.println("high: " + high);
+            int mid = (high - low) / 2 + low;
+            System.out.println("mid: " + mid);
+            System.out.println(dictionary[mid]);
+            // Check if word is in dictionary
+            if(dictionary[mid].equals(currentWord)){
+                return true;
+            }
+            // Check if they have the same letter so you can search based on the other letters
+            if(currentWord.charAt(currentLetter) == dictionary[mid].charAt(currentLetter)){
+                currentLetter++;
+            }
+            // Check if first letter of current word is less than first character of midpoint word
+            if(currentWord.charAt(currentLetter) < dictionary[mid].charAt(currentLetter)){
+                high = mid - 1;
+            }
+            else if(currentWord.charAt(currentLetter) > dictionary[mid].charAt(currentLetter)){
+                low = mid + 1;
+            }
+            // If letters are equal case
+            else{
 
-        return null;
+            }
+        }
+        return false;
     }
 }
