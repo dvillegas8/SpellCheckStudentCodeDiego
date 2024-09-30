@@ -22,6 +22,42 @@ public class SpellCheck {
     public String[] checkWords(String[] text, String[] dictionary) {
         // Arraylist to keep track of all words not present in dictionary
         ArrayList<String> misspelledWords = new ArrayList<String>();
+        // Array of nodes where the index is the ASCII value of the current letter
+        Node[] next = new Node[260];
+        Node root = new Node(false, next);
+        Trie trie = new Trie(root);
+        // Crete trie that consists of all dictionary Strings
+        for (int i = 0; i < dictionary.length; i++) {
+            trie.insert(dictionary[i]);
+        }
+        for (int i = 0; i < text.length; i++) {
+            if (!trie.lookup(text[i])) {
+                misspelledWords.add(text[i]);
+            }
+        }
+        for(int i = 0 ; i < misspelledWords.size(); i++){
+            System.out.println(misspelledWords.get(i) + ", " + i);
+        }
+        System.out.println("_____________________");
+        // Removes duplicates
+        String word = "";
+        for (int i = 0; i < misspelledWords.size() - 1; i++) {
+            word = misspelledWords.get(i);
+            for (int j = i + 1; j < misspelledWords.size(); j++) {
+                if (word.equals(misspelledWords.get(j))) {
+                    misspelledWords.remove(j);
+                    j--;
+                }
+            }
+        }
+        // Convert ArrayList to array
+        String[] words = new String[misspelledWords.size()];
+        for (int i = 0; i < words.length; i++) {
+            words[i] = misspelledWords.get(i);
+            System.out.println(words[i]);
+        }
+        return words;
+        /*
         String currentWord = "";
         System.out.println(dictionary.length);
         for(int i = 0; i < dictionary.length; i++){
@@ -91,5 +127,8 @@ public class SpellCheck {
             }
         }
         return false;
+    }
+
+         */
     }
 }
