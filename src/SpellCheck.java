@@ -20,6 +20,12 @@ public class SpellCheck {
      * @return String[] of all mispelled words in the order they appear in text. No duplicates.
      */
     public String[] checkWords(String[] text, String[] dictionary) {
+        for(int i = 0; i < dictionary.length; i++){
+            if(dictionary[i].equals("k")){
+                System.out.println("***************************");
+            }
+            //System.out.println(dictionary[i]);
+        }
         // Arraylist to keep track of all words not present in dictionary
         ArrayList<String> misspelledWords = new ArrayList<String>();
         // Array of nodes where the index is the ASCII value of the current letter
@@ -38,7 +44,7 @@ public class SpellCheck {
         for(int i = 0 ; i < misspelledWords.size(); i++){
             System.out.println(misspelledWords.get(i) + ", " + i);
         }
-        System.out.println("_____________________");
+        //System.out.println("_____________________");
         // Removes duplicates
         String word = "";
         for (int i = 0; i < misspelledWords.size() - 1; i++) {

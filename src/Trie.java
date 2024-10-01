@@ -40,6 +40,10 @@ public class Trie {
             }
             currentNode = currentNode.getNext()[s.charAt(i)];
         }
+        // Check if it is even a word in the dictionary
+        if(!currentNode.isWord){
+            return false;
+        }
         return true;
     }
     // Debugging
