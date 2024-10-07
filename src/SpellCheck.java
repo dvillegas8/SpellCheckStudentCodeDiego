@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * for Adventures in Algorithms
  * At Menlo School in Atherton, CA
  *
- * Completed by: [YOUR NAME HERE]
+ * Completed by: Diego Villegas
  * */
 
 public class SpellCheck {
@@ -26,19 +26,19 @@ public class SpellCheck {
         Node root = new Node(false, next);
         // Trie to keep track of all the misspelled words in text
         Trie misspelledWords = new Trie(root);
-        Trie trie = new Trie(root);
+        Trie trieDictionary = new Trie(root);
         // ArrayList to keep track of order misspelled words appear in text
         ArrayList<String> order = new ArrayList<String>();
         // Create trie that consists of all dictionary Strings
         for (int i = 0; i < dictionary.length; i++) {
-            trie.insert(dictionary[i]);
+            trieDictionary.insert(dictionary[i]);
         }
         // For every word in text
         for (int i = 0; i < text.length; i++) {
             // Check if it is in misspelled words
             if(!misspelledWords.lookup(text[i])){
                 // Check if it is in the dictionary
-                if(!trie.lookup(text[i])) {
+                if(!trieDictionary.lookup(text[i])) {
                     // Add current word (text[i]) to misspelledWords trie
                     misspelledWords.insert(text[i]);
                     // Add current word to order
@@ -50,28 +50,25 @@ public class SpellCheck {
         String[] words = order.toArray(new String[0]);
         return words;
     }
+    // Returns String[] of all misspelled words in the order they appear in text. No duplicates.
+    // Achieves the above by doing a tertiary search trie
     public String[] checkWordsTST(String[] text, String[] dictionary) {
-        //for(int i = 0; i < dictionary.length; i++){
-            //System.out.println(dictionary[i]);
-        //}
-        // Create a top node for the dictionary trie
-        TSTNode top = new TSTNode(false,null, null, null, dictionary[0].charAt(0));
         TSTTrie misspelledWords = new TSTTrie(null);
-        TSTTrie trie = new TSTTrie(top);
+        TSTTrie trie = new TSTTrie(null);
         // ArrayList to keep track of order misspelled words appear in text
         ArrayList<String> order = new ArrayList<String>();
         // Create trie dictionary
         for(int i = 0; i < dictionary.length; i++){
-            trie.insert(dictionary[i]);
+            trie.put(dictionary[i]);
         }
         // For each word in text
         for(int i = 0; i < text.length; i++){
             // Check if it is in misspelled words
-            if(!misspelledWords.lookup(text[i])){
+            if(!misspelledWords.search(text[i])){
                 // Check if it is in the dictionary
-                if(!trie.lookup(text[i])) {
+                if(!trie.search(text[i])) {
                     // Add current word (text[i]) to misspelledWords trie
-                    misspelledWords.insert(text[i]);
+                    misspelledWords.put(text[i]);
                     // Add current word to order
                     order.add(text[i]);
                 }

@@ -3,7 +3,7 @@ public class TSTNode{
     private TSTNode left;
     private TSTNode middle;
     private TSTNode right;
-    char letter;
+    private char letter;
     public TSTNode(boolean isWord, TSTNode left, TSTNode middle, TSTNode right, char letter){
         this.isWord = isWord;
         this.left = left;
